@@ -4,29 +4,98 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=main, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="./wireframe.css">
 </head>
 <body>
   <main>
-    <section id="page1">
-      <h1>Welcome to Our __ Quiz!</h1>
-      <h3>ARE YOU READY!!!!?</h3>
+    <section class="page" id="start-page">
+      <div>
+        <h1>Flex Your Music Knowledge</h1>
+        <h2>Are you ready to rock, juke, jump and jive?</h2>
+      </div>
       <form action="">
-        <button>Start Quiz</button>
+        <button>Start Music Quiz</button>
       </form>
     </section>
 
-    <section id="page2">
-      
-    </section>
-    <section id="page3">
-      
+    <section id="question-page">
+      <article class="status">
+        <span>Question #:</span>
+        <span>Current Score</span>
+      </article>
+      <h3 class="question">At what age did Janis Joplin, Jimi Hendrix and Kurt Cobain die at?</h3>
+      <form action="" class="answers">
+        <span>
+          <input type="radio" id="answer1" name="wrong-answer1" value="answer1">
+          <label for="answer1">19</label><br>
+        </span>
+        <span>
+          <input type="radio" id="answer2" name="wrong-answer2" value="answer2">
+          <label for="answer2">23</label><br>
+        </span>
+        <span>
+          <input type="radio" id="answer3" name="correct-answer" value="answer3">
+          <label for="answer3">27</label><br>
+        </span>
+        <span>
+          <input type="radio" id="answer4" name="wrong-answer3" value="answer4">
+          <label for="answer4">30</label><br>
+        </span>
+        <span>
+          <input type="radio" id="answer5" name="wrong-answer4" value="answer5">
+          <label for="answer5">28</label><br>
+        </span>
+
+        <button class="submit">SUBMIT</button>
+      </form>
     </section>
 
-    <section id="page4">
-      
-    </section>
-    <section id="page5">
+    <section class="page" id="correct-page">
+      <article class="status">
+        <span>Question #:</span>
+        <span>Current Score</span>
+      </article>
+      <h2 class="rightAnswer">Good Job! Why don't we go meet the band?</h2>
 
+      <form action="">
+        <button>Next Question</button>
+      </form>
+    </section>
+
+    <section class="page" id="incorrect-page">
+      <article class="status">
+        <span>Question #:</span>
+        <span>Current Score</span>
+      </article>
+      <h2 class="wrongAnswer">Boo! I need that backstage pass back!</h2>
+      <form action="">
+        <button>Next Question</button>
+      </form>
+    </section>
+      
+    <section class="page" id="loser-page">
+      
+      <h2 class="quizEnd">Shows Over!</h2>
+      <article class="final-status">
+        <span>Final Score:</span>
+      </article>
+      <p>Well Dang... Thanks for playing but we feel it would be best if you stick to knitting.</p>
+      <form action="">
+        <button>Play Again?</button>
+      </form>
+    </section>
+
+
+    <section class="page" id="winner-page">
+      
+      <h2 class="quizEnd">Shows Over!</h2>
+      <article class="final-status">
+        <span>Final Score:</span>
+      </article>
+      <p>Alright! Looks like you are quite the aficionado when it comes to music.</p>
+      <form action="">
+        <button>Play Again?</button>
+      </form>
     </section>
   </main>
 </body>

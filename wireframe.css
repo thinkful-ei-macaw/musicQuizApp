@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main {
+  padding: 1rem;
+  color: whitesmoke;
+}
+
+section {
+  margin: 2rem;
+  padding: 3rem;
+  position: relative;
+  min-height: 30rem;
+  max-width: 20rem;;
+  border: 1rem solid brown;
+  background-image: url(https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&h=650&w=940);
+}
+
+h1 {
+  color: rgb(118, 118, 228);
+  font-size: 2rem;
+}
+h2 {
+  font-size: 1.5rem;
+}
+
+button {
+  padding: 1rem;
+  display: block;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.answers span {
+  margin: 1rem;
+  display: block;
+}
+.status {
+  position: absolute;
+  top: 0px;
+}

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Example store structure
  */
@@ -41,3 +43,9 @@ const store = {
  * You may add attributes (classes, ids, etc) to the existing HTML elements, or link stylesheets or additional scripts if necessary
  *
  */
+
+
+//  SEE BELOW FOR THE CATEGORIES OF THE TYPES OF FUNCTIONS YOU WILL BE CREATING
+
+
+ ******** 
