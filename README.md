@@ -16,7 +16,7 @@ Questions I will be asking and storing in my STORE object:
 - Cyndi Lauper
 - Billy Idol
 
-3. Which regal-sounding band topped the charts in 2008 with 'Sex on Fire?
+3. Which regal-sounding band topped the charts in 2008 with 'Sex on Fire'?
 - Lords of Acid
 - The Gypsy Kings
 - Kings Of Leon
@@ -36,3 +36,38 @@ Questions I will be asking and storing in my STORE object:
 - The Rolling Stones
 - Parliament
 - The Grateful Dead
+
+6. Who topped the charts in 2014 with ‘Happy’?
+- John Legend
+- Katy Perry
+- One Direction
+- Pharrell Williams
+- Chris Brown
+
+7. Andre Young is better known as which rapper?
+- Nas
+- Dr. Dre
+- T.I.
+- Snoop Dog
+- Andre 3000
+
+8. Who performed "Wildflowers" at the 2018 Grammy Awards with Chris Stapleton?
+- Emmylou Harris
+- Taylor Swift
+- Rihanna
+- Lady Gaga
+- Shakira
+
+9. What band from Issaquah, Washington includes lead singer, Isaac Brock?
+- Death Cab For Cutie
+- Mudhoney
+- Alice in Chains
+- Modest Mouse
+- Band of Horses
+
+10. What name did Nicki Minaj choose for her first studio album?
+- Pink Friday
+- The Pinkprint
+- Queen
+- Pink Friday: Roman Reloaded
+- Yellow Submarine

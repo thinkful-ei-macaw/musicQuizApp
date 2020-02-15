@@ -7,25 +7,115 @@ const STORE = {
   // 5 or more questions are required
   questions: [
     {
-      question: 'What color is broccoli?',
+      question: 'At what age did Janis Joplin, Jimi Hendrix and Kurt Cobain die at?',
       answers: [
-        'red',
-        'orange',
-        'pink',
-        'green'
+        '19',
+        '23',
+        '27',
+        '30',
+        '28'
       ],
-      correctAnswer: 'green'
+      correctAnswer: '27'
     },
     {
-      question: 'What is the current year?',
+      question: 'Who insisted throughout the 80s that "Girls just wanna have fun?',
       answers: [
-        '1970',
-        '2015',
-        '2019',
-        '2005'
+        'Madonna',
+        'Tiffany',
+        'Whitney Houston',
+        'Cyndi Lauper',
+        'Blondie'
       ],
-      correctAnswer: '2019'
-    }
+      correctAnswer: 'Cyndi Lauper'
+    },
+    {
+      question: 'Which regal-sounding band topped the charts in 2008 with "Sex on Fire"?',
+      answers: [
+        'Lords of Acid',
+        'The Gypsy Kings',
+        'Kings of Leon',
+        'Prince',
+        'Queen'
+      ],
+      correctAnswer: 'Kings of Leon'
+    },
+    {
+      question: 'Which couple released the song "Crazy In Love"?',
+      answers: [
+        'Sonny and Cher',
+        'Britney and Kevin Federline ',
+        'Thurston Moore and Kim Gordon',
+        'Miranda Lambert and Blake Shelton',
+        'Beyonce and Jay-Z'
+      ],
+      correctAnswer: 'Beyonce and Jay-Z'
+    },
+    {
+      question: 'Which band who had hits spanning 5 decades, used to be known as The Rattlesnakes?',
+      answers: [
+        'The Beatles',
+        'The Bee Gees',
+        'The Rolling Stones',
+        'Parliament',
+        'The Grateful Dead'
+      ],
+      correctAnswer: 'The Bee Gees'
+    },
+    {
+      question: 'Who topped the charts in 2014 with "Happy"?',
+      answers: [
+        'John Legend',
+        'Katy Perry',
+        'One Direction',
+        'Pharrell Williams',
+        'Chris Brown'
+      ],
+      correctAnswer: 'Pharrell Williams'
+    },
+    {
+      question: 'Andre Young is better known as which rapper?',
+      answers: [
+        'Nas',
+        'Dr. Dre',
+        'T.I.',
+        'Snoop Dog',
+        'Andre 3000'
+      ],
+      correctAnswer: 'Dr. Dre'
+    },
+    {
+      question: 'Who performed "Wildflowers" at the 2018 Grammy Awards with Chris Stapleton?',
+      answers: [
+        'Emmylou Harris',
+        'Taylor Swift',
+        'Rihanna',
+        'Lady Gaga',
+        'Shakira'
+      ],
+      correctAnswer: 'Emmylou Harris'
+    },
+    {
+      question: 'What band from Issaquah, Washington includes lead singer, Isaac Brock?',
+      answers: [
+        'Death Cab For Cutie',
+        'Mudhoney',
+        'Alice In Chains',
+        'Modest Mouse',
+        'Band of Horses'
+      ],
+      correctAnswer: 'Modest Mouse'
+    },
+    {
+      question: 'What name did Nicki Minaj choose for her first studio album?',
+      answers: [
+        'Pink Friday',
+        'The Pinkprint',
+        'Queen',
+        'Yellow Submarine',
+        'Pink Friday: Roman Reloaded'
+      ],
+      correctAnswer: 'Pink Friday'
+    },
   ],
   quizStarted: false,
   questionNumber: 0,
@@ -77,15 +167,43 @@ function generateQuestionPage() {
   return `
   <section id="question-page">
       <article class="status">
-        <span>Question #:</span>
-        <span>Current Score</span>
+        <span>Question #:${STORE.questionNumber}</span>
+        <span>Current Score:${STORE.score}</span>
       </article>
       <h3 class="question">${STORE.questions[STORE.questionNumber].question}</h3>
       <form action="" class="answers">
         ${generateAnswers()}
-        <button class="submit">SUBMIT</button>
+        <button class="submitAnswer">SUBMIT ANSWER</button>
       </form>
     </section>`;
+}
+
+function generateCorrectAnswerPage() {
+  return `
+  <section class="page" id="correct-page">
+      <article class="status">
+        <span>Question #:</span>
+        <span>Current Score</span>
+      </article>
+      <h2 class="rightAnswer">Good Job! Why don't we go meet the band?</h2>
+
+      <button>Next Question</button>
+    </section>
+  `;
+}
+
+function generateIncorrectAnswerPage() {
+  return `
+  <section class="page" id="incorrect-page">
+      <article class="status">
+        <span>Question #:</span>
+        <span>Current Score</span>
+      </article>
+      <h2 class="wrongAnswer">Boo! I need that backstage pass back!</h2>
+      
+      <button>Next Question</button>
+    </section>
+  `;
 }
 
 
@@ -99,6 +217,7 @@ function render() {
   } else if(STORE.quizStarted === true) {
     // display question page
     $( 'main' ).html(generateQuestionPage());
+    handleQuestionAnswered();
   }
 
 }
@@ -115,6 +234,25 @@ function handleStartQuiz() {
     // --> call render function
     render();
   });
+}
+
+function handleQuestionAnswered() {
+  // add even listener to #submitAnswer button
+  $( 'form' ).submit(e => {
+    e.preventDefault();
+
+    const userAnswer = $( '#answer${i}' ).val();
+    console.log(userAnswer);
+    
+  })
+  // On click submit answer form and compare it to the correctAnswer property in question object
+
+  // If correct, display correctAnswer page
+  // Else display incorrect answer page
+}
+
+function checkAnswer() {
+  // This will take the submitted form and compare their choice with answer in object
 }
 
 
