@@ -123,24 +123,11 @@ const STORE = {
   answerFeedback: false
 };
 
-/**
- *
- * Your app should include a render() function, that regenerates
- * the view each time the store is updated. See your course
- * material, consult your instructor, and reference the slides
- * for more details.
- *
- * NO additional HTML elements should be added to the index.html file.
- *
- * You may add attributes (classes, ids, etc) to the existing HTML elements, or link stylesheets or additional scripts if necessary
- *
- */
 
 /********** TEMPLATE GENERATION FUNCTIONS **********/
 // These functions return HTML templates
 
 function generateStartPage() {
-  // return start page html
   return `
   <section class="page" id="startPage">
     <div>
@@ -151,28 +138,36 @@ function generateStartPage() {
   </section>`;
 }
 
+function generateScoreboard() {
+  return `
+  <article class="status">
+    <span>Question ${STORE.questionNumber + 1} Out Of 10</span>
+    <span>Current Score: ${STORE.score} / 10</span>
+  </article>
+  `;
+}
+
 function generateAnswers() {
   let answersHtml = '';
-  STORE.questions[STORE.questionNumber - 1].answers.forEach((answer, i) => {    
+
+  STORE.questions[STORE.questionNumber].answers.forEach((answer, i) => {    
     answersHtml += `
     <span>
       <input type="radio" id="answer${i}" name="radioAnswer" 
-      value="${answer}">
+      value="${answer}" required>
       <label for="answer${i}">${answer}</label><br>
     </span>
     `;
   });
+
   return answersHtml;
 }
 
 function generateQuestionPage() {
   return `
   <section id="question-page">
-      <article class="status">
-        <span>Question #:${STORE.questionNumber}</span>
-        <span>Current Score:${STORE.score}</span>
-      </article>
-      <h3 class="question">${STORE.questions[STORE.questionNumber - 1].question}</h3>
+      ${generateScoreboard()}
+      <h3 class="question">${STORE.questions[STORE.questionNumber].question}</h3>
       <form action="" class="answersForm">
         ${generateAnswers()}
         <button class="submitAnswer">SUBMIT ANSWER</button>
@@ -183,30 +178,60 @@ function generateQuestionPage() {
 function generateCorrectAnswerPage() {
   return `
   <section class="page" id="correct-page">
-      <article class="status">
-        <span>Question #: ${STORE.questionNumber}</span>
-        <span>Current Score: ${STORE.score}</span>
-      </article>
-      <h2 class="rightAnswer">Good Job! Why don't we go meet the band?</h2>
-
-      <button id="nextBtn">Next Question</button>
-    </section>
+    ${generateScoreboard()}
+    <h2 class="rightAnswer">Right On! Keep it up and we will get you backstage.</h2>
+    ${generateNextBtn()}
+  </section>
   `;
 }
 
 function generateIncorrectAnswerPage() {
   return `
   <section class="page" id="incorrect-page">
-      <article class="status">
-        <span>Question #: ${STORE.questionNumber}</span>
-        <span>Current Score: ${STORE.score}</span>
+    ${generateScoreboard()}
+    <h2 class="wrongAnswer">Wrong Answer. We were looking for "${STORE.questions[STORE.questionNumber].correctAnswer}". I'm going to need that backstage pass back!</h2>
+    ${generateNextBtn()}
+  </section>
+  `;
+}
+
+function generateNextBtn() {
+  if(STORE.questionNumber < 9) {
+    return `
+    <button id="nextBtn">Next Question</button>
+    `;
+  } else {
+    return `
+    <button id="resultsBtn">See Results</button>
+    `;
+  }
+}
+
+function generateResultsPage() {
+  return `
+  <section class="page" id="results-page">
+      <h2 class="quizEnd">Shows Over!</h2>
+      <article class="final-status">
+        <span>Final Score: ${STORE.score}/10</span>
       </article>
-      <h2 class="wrongAnswer">Wrong Answer. We were looking for "${STORE.questions[STORE.questionNumber - 1].correctAnswer}". I'm going to need that backstage pass back!</h2>
-      
-      <button id="nextBtn">Next Question</button>
+      ${generateResultsStatement()}
+        <button id="playAgainBtn">Play Again?</button>
     </section>
   `;
 }
+
+function generateResultsStatement() {
+  if(STORE.score < 7) {
+    return `
+    <p>Well Dang... Thanks for playing but we feel it would be best if you stick to knitting.</p>
+    `;
+  } else {
+    return `
+    <p>Alright! Looks like you are quite the aficionado when it comes to music. Here is that backstage pass I promised.</p>
+    `;
+  }
+}
+
 
 
 /********** RENDER FUNCTION(S) **********/
@@ -216,25 +241,21 @@ function render() {
   if(STORE.quizStarted === false) {
     // display start page
     $( 'main' ).html(generateStartPage());
-    handleStartQuiz();
-  } else if(STORE.questionNumber <= STORE.questions.length) {
+  } else if(STORE.questionNumber < STORE.questions.length) {
     // display question page
     $( 'main' ).html(generateQuestionPage());
     handleQuestionSubmitted();
-  } else if(STORE.questionNumber === 10) {
+  } else {
     // display results page
+    $( 'main' ).html(generateResultsPage());
   }
 }
 
 function renderFeedback() {
   if(STORE.answerFeedback === true) {
     $( 'main' ).html(generateCorrectAnswerPage());
-    handleNextQuestion();
-    
   } else if (STORE.answerFeedback === false) {
     $( 'main' ).html(generateIncorrectAnswerPage());
-    handleNextQuestion();
-    
   }
 } 
 
@@ -243,13 +264,8 @@ function renderFeedback() {
 
 function handleStartQuiz() {
   // add an event listener to start Music Quiz button
-  $( 'main' ).on('click', '#startBtn', function(e) {
-    console.log('startBtn');
-    
-    // change quizStarted to true
+  $( 'main' ).on('click', '#startBtn', function() {
     STORE.quizStarted = true;
-    STORE.questionNumber++;
-    // --> call render function
     render();
   });
 }
@@ -267,28 +283,46 @@ function handleQuestionSubmitted() {
 
 function handleCheckAnswer(userAnswer) {
   // Compare user answer with correct answer
-  if (userAnswer === STORE.questions[STORE.questionNumber - 1].correctAnswer) {
-    // Display correct answer page
+  if (userAnswer === STORE.questions[STORE.questionNumber].correctAnswer) {
     STORE.answerFeedback = true;
     // Add point to score
     STORE.score += 1;
-    renderFeedback();
   } else {
-    // generate wrong answer page
     STORE.answerFeedback = false;
-    renderFeedback();
   }
+  renderFeedback();
 }
 
 function handleNextQuestion() {
-  $( 'main' ).on('click', '#nextBtn', function(e) {
-    console.log('nextBtn');
+  $( 'main' ).on('click', '#nextBtn', function() {
     // Increment questionNumber by 1
     STORE.questionNumber++;
     render();
   });
 }
 
+function handleResults() {
+  $( 'main' ).on('click', '#resultsBtn', function() {
+    STORE.questionNumber++;
+    render();
+  });
+}
 
+function handlePlayAgain() {
+  $( 'main' ).on('click', '#playAgainBtn', function() {
+    STORE.questionNumber = 0;
+    STORE.score = 0;
+    STORE.quizStarted = false;
+    render();
+  });
+}
 
-$(render());
+function handleQuizApp() {
+  handleStartQuiz();
+  handleNextQuestion();
+  handleResults();
+  handlePlayAgain();
+  render();
+}
+
+$(handleQuizApp());
