@@ -119,7 +119,8 @@ const STORE = {
   ],
   quizStarted: false,
   questionNumber: 0,
-  score: 0
+  score: 0,
+  answerFeedback: false
 };
 
 /**
@@ -152,10 +153,11 @@ function generateStartPage() {
 
 function generateAnswers() {
   let answersHtml = '';
-  STORE.questions[STORE.questionNumber].answers.forEach((answer, i) => {
+  STORE.questions[STORE.questionNumber - 1].answers.forEach((answer, i) => {    
     answersHtml += `
     <span>
-      <input type="radio" id="answer${i}" name="answer${i}" value=${answer}>
+      <input type="radio" id="answer${i}" name="radioAnswer" 
+      value="${answer}">
       <label for="answer${i}">${answer}</label><br>
     </span>
     `;
@@ -170,8 +172,8 @@ function generateQuestionPage() {
         <span>Question #:${STORE.questionNumber}</span>
         <span>Current Score:${STORE.score}</span>
       </article>
-      <h3 class="question">${STORE.questions[STORE.questionNumber].question}</h3>
-      <form action="" class="answers">
+      <h3 class="question">${STORE.questions[STORE.questionNumber - 1].question}</h3>
+      <form action="" class="answersForm">
         ${generateAnswers()}
         <button class="submitAnswer">SUBMIT ANSWER</button>
       </form>
@@ -182,12 +184,12 @@ function generateCorrectAnswerPage() {
   return `
   <section class="page" id="correct-page">
       <article class="status">
-        <span>Question #:</span>
-        <span>Current Score</span>
+        <span>Question #: ${STORE.questionNumber}</span>
+        <span>Current Score: ${STORE.score}</span>
       </article>
       <h2 class="rightAnswer">Good Job! Why don't we go meet the band?</h2>
 
-      <button>Next Question</button>
+      <button id="nextBtn">Next Question</button>
     </section>
   `;
 }
@@ -196,12 +198,12 @@ function generateIncorrectAnswerPage() {
   return `
   <section class="page" id="incorrect-page">
       <article class="status">
-        <span>Question #:</span>
-        <span>Current Score</span>
+        <span>Question #: ${STORE.questionNumber}</span>
+        <span>Current Score: ${STORE.score}</span>
       </article>
-      <h2 class="wrongAnswer">Boo! I need that backstage pass back!</h2>
+      <h2 class="wrongAnswer">Wrong Answer. We were looking for "${STORE.questions[STORE.questionNumber - 1].correctAnswer}". I'm going to need that backstage pass back!</h2>
       
-      <button>Next Question</button>
+      <button id="nextBtn">Next Question</button>
     </section>
   `;
 }
@@ -210,18 +212,31 @@ function generateIncorrectAnswerPage() {
 /********** RENDER FUNCTION(S) **********/
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 function render() {
-  // if STORE.quizStarted === false then call generateStartPage();
+  // Conditionals to see what page to render
   if(STORE.quizStarted === false) {
+    // display start page
     $( 'main' ).html(generateStartPage());
     handleStartQuiz();
-  } else if(STORE.quizStarted === true) {
+  } else if(STORE.questionNumber <= STORE.questions.length) {
     // display question page
     $( 'main' ).html(generateQuestionPage());
-    handleQuestionAnswered();
+    handleQuestionSubmitted();
+  } else if(STORE.questionNumber === 10) {
+    // display results page
   }
-
 }
 
+function renderFeedback() {
+  if(STORE.answerFeedback === true) {
+    $( 'main' ).html(generateCorrectAnswerPage());
+    handleNextQuestion();
+    
+  } else if (STORE.answerFeedback === false) {
+    $( 'main' ).html(generateIncorrectAnswerPage());
+    handleNextQuestion();
+    
+  }
+} 
 
 /********** EVENT HANDLER FUNCTIONS **********/
 // These functions handle events (submit, click, etc)
@@ -229,32 +244,50 @@ function render() {
 function handleStartQuiz() {
   // add an event listener to start Music Quiz button
   $( 'main' ).on('click', '#startBtn', function(e) {
+    console.log('startBtn');
+    
     // change quizStarted to true
     STORE.quizStarted = true;
+    STORE.questionNumber++;
     // --> call render function
     render();
   });
 }
 
-function handleQuestionAnswered() {
-  // add even listener to #submitAnswer button
+function handleQuestionSubmitted() {
+  // add event listener to form
   $( 'form' ).submit(e => {
     e.preventDefault();
-
-    const userAnswer = $( '#answer${i}' ).val();
-    console.log(userAnswer);
-    
-  })
-  // On click submit answer form and compare it to the correctAnswer property in question object
-
-  // If correct, display correctAnswer page
-  // Else display incorrect answer page
+    // Get value from form submit
+    const userAnswer = $( 'input[name=radioAnswer]:checked', '.answersForm' ).val();    
+    // check if user is right
+    handleCheckAnswer(userAnswer);
+  });
 }
 
-function checkAnswer() {
-  // This will take the submitted form and compare their choice with answer in object
+function handleCheckAnswer(userAnswer) {
+  // Compare user answer with correct answer
+  if (userAnswer === STORE.questions[STORE.questionNumber - 1].correctAnswer) {
+    // Display correct answer page
+    STORE.answerFeedback = true;
+    // Add point to score
+    STORE.score += 1;
+    renderFeedback();
+  } else {
+    // generate wrong answer page
+    STORE.answerFeedback = false;
+    renderFeedback();
+  }
 }
 
+function handleNextQuestion() {
+  $( 'main' ).on('click', '#nextBtn', function(e) {
+    console.log('nextBtn');
+    // Increment questionNumber by 1
+    STORE.questionNumber++;
+    render();
+  });
+}
 
 
 
