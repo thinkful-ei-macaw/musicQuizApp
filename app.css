@@ -51,9 +51,14 @@ button {
   width: fit-content;
   font-family: 'Odibee Sans', cursive;
   font-size: 2rem;
-  background-color: rgb(172, 50, 177);
+  background-color: #ac32b1;
   color: #e8fbf2;
   border: none;
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: #8a288e;
 }
 
 .answersForm span {
@@ -85,8 +90,32 @@ button {
 }
 
 
+
+
+/* Media Queries */
+
 @media only screen and (min-width: 700px) {
-  main {
-    /* background: purple; */
+  h2, h1 {
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .quizBegin,
+  .quizEnd {
+    font-size: 6rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .question {
+    font-size: 1.5rem;
+  }
+
+  label {
+    font-size: 1.2rem;
   }
 }
