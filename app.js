@@ -140,7 +140,7 @@ function generateStartPage() {
 
 function generateScoreboard() {
   return `
-  <article class="status">
+  <article class="scoreboard">
     <span>Question ${STORE.questionNumber + 1} Out Of 10</span>
     <span>Current Score: ${STORE.score} / 10</span>
   </article>
@@ -165,7 +165,7 @@ function generateAnswers() {
 
 function generateQuestionPage() {
   return `
-  <section id="question-page">
+  <section class="page" id="question-page">
       ${generateScoreboard()}
       <h3 class="question">${STORE.questions[STORE.questionNumber].question}</h3>
       <form action="" class="answersForm">
