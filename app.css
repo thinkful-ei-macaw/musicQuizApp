@@ -5,8 +5,9 @@
 }
 
 main {
-  color: whitesmoke;
+  color: #e8fbf2;
   font-family: 'Roboto', sans-serif;
+  line-height: 1.3;
 }
 
 .page {
@@ -15,12 +16,17 @@ main {
   flex-direction: column;
   justify-content: space-around;
   min-height: 100vh;
-  background-image: url(https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&h=650&w=940);
+  background: 
+  linear-gradient(
+      rgba(0, 0, 0, 0.6), 
+      rgba(0, 0, 0, 0.8)
+    ),
+  url(https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=60);
   background-size: cover;
 }
 
 h1 {
-  color: rgb(118, 118, 228);
+  color: #3535ff;
   font-size: 4rem;
   font-family: 'Odibee Sans', cursive;
   letter-spacing: 2px;
@@ -38,8 +44,8 @@ button {
   width: fit-content;
   font-family: 'Odibee Sans', cursive;
   font-size: 2rem;
-  background-color: rgb(118, 118, 228);
-  color: whitesmoke;
+  background-color: rgb(172, 50, 177);
+  color: #e8fbf2;
   border: none;
 }
 
@@ -47,8 +53,12 @@ button {
   margin: 1rem;
   display: block;
 }
+
+.answersForm label {
+  margin-left: .5rem;
+}
+
 .scoreboard {
-  margin: 2rem;
   font-size: 1.2rem;
   line-height: 2;
   text-align: center;
@@ -57,5 +67,9 @@ button {
 
 .scoreboard span {
   display: block;
+}
+
+.submitAnswer {
+  margin-top: 4rem;
 }
 

@@ -167,11 +167,13 @@ function generateQuestionPage() {
   return `
   <section class="page" id="question-page">
       ${generateScoreboard()}
-      <h3 class="question">${STORE.questions[STORE.questionNumber].question}</h3>
-      <form action="" class="answersForm">
-        ${generateAnswers()}
-        <button class="submitAnswer">SUBMIT ANSWER</button>
-      </form>
+      <div>
+        <h3 class="question">${STORE.questions[STORE.questionNumber].question}</h3>
+        <form action="" class="answersForm">
+          ${generateAnswers()}
+          <button class="submitAnswer">SUBMIT ANSWER</button>
+        </form>
+      </div>
     </section>`;
 }
 
