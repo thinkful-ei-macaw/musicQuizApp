@@ -75,11 +75,11 @@ const STORE = {
     {
       question: 'Andre Young is better known as which rapper?',
       answers: [
-        'Nas',
+        'Andre 3000',
         'Dr. Dre',
         'T.I.',
         'Snoop Dog',
-        'Andre 3000'
+        'Nas'
       ],
       correctAnswer: 'Dr. Dre'
     },
@@ -120,7 +120,9 @@ const STORE = {
   quizStarted: false,
   questionNumber: 0,
   score: 0,
-  answerFeedback: false
+  answerFeedback: false,
+  correctResponse: ['Right on! Keep it up and we will get you backstage.', 'Yes! Killing it with your musical knowledge.', 'Groovy man! That was impressive.', 'It\'s all happening!'],
+  incorrectResponse: ['Better call your mom to come and get you.', 'You do like music, right?', 'No worries, there is always accounting.', 'What\'s the opposite of encore?']
 };
 
 
@@ -131,8 +133,8 @@ function generateStartPage() {
   return `
   <section class="page" id="startPage">
     <div>
-      <h1>Flex Your Music Knowledge</h1>
-      <h2>Are you ready to rock, juke, jump and jive?</h2>
+      <h1 class="quizBegin">Flex Your Music Knowledge</h1>
+      <h2>Ready to rock, juke, jump and jive?</h2>
     </div>
     <button id="startBtn">Start Music Quiz</button>
   </section>`;
@@ -177,11 +179,16 @@ function generateQuestionPage() {
     </section>`;
 }
 
+function generateRandomResponse(quoteArr) {
+  const index = Math.floor(Math.random() * 4);
+  return quoteArr[index];
+}
+
 function generateCorrectAnswerPage() {
   return `
   <section class="page" id="correct-page">
     ${generateScoreboard()}
-    <h2 class="rightAnswer">Right On! Keep it up and we will get you backstage.</h2>
+    <h2 class="rightAnswer">${generateRandomResponse(STORE.correctResponse)}</h2>
     ${generateNextBtn()}
   </section>
   `;
@@ -191,7 +198,7 @@ function generateIncorrectAnswerPage() {
   return `
   <section class="page" id="incorrect-page">
     ${generateScoreboard()}
-    <h2 class="wrongAnswer">Wrong Answer. We were looking for "${STORE.questions[STORE.questionNumber].correctAnswer}". I'm going to need that backstage pass back!</h2>
+    <h2 class="wrongAnswer">Wrong Answer. We were looking for "${STORE.questions[STORE.questionNumber].correctAnswer}". ${generateRandomResponse(STORE.incorrectResponse)}</h2>
     ${generateNextBtn()}
   </section>
   `;
@@ -213,7 +220,7 @@ function generateResultsPage() {
   return `
   <section class="page" id="results-page">
       <h2 class="quizEnd">Shows Over!</h2>
-      <article class="final-status">
+      <article class="scoreboard">
         <span>Final Score: ${STORE.score}/10</span>
       </article>
       ${generateResultsStatement()}
@@ -225,11 +232,11 @@ function generateResultsPage() {
 function generateResultsStatement() {
   if(STORE.score < 7) {
     return `
-    <p>Well Dang... Thanks for playing but we feel it would be best if you stick to knitting.</p>
+    <p class="finalResponse">Well Dang... Thanks for playing but we feel it would be best if you stick to knitting.</p>
     `;
   } else {
     return `
-    <p>Alright! Looks like you are quite the aficionado when it comes to music. Here is that backstage pass I promised.</p>
+    <p class="finalResponse">Alright! Looks like you are quite the aficionado when it comes to music. Here is that backstage pass I promised.</p>
     `;
   }
 }
